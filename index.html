@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tech Seducer</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            color: #fff;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 300;
+            margin-bottom: 10px;
+        }
+
+        h1 span {
+            font-weight: 700;
+            background: linear-gradient(90deg, #00d4ff, #7b2cbf);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            color: #888;
+            font-size: 1.1rem;
+        }
+
+        .config {
+            background: rgba(255,255,255,0.05);
+            border-radius: 10px;
+            padding: 15px 20px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .config label {
+            color: #888;
+            white-space: nowrap;
+        }
+
+        .config input {
+            flex: 1;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid #333;
+            border-radius: 5px;
+            padding: 10px 15px;
+            color: #fff;
+            font-size: 0.9rem;
+        }
+
+        .config input:focus {
+            outline: none;
+            border-color: #00d4ff;
+        }
+
+        .panels {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 900px) {
+            .panels {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .panel {
+            background: rgba(255,255,255,0.05);
+            border-radius: 15px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .panel h2 {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .panel.input h2 { color: #ff6b6b; }
+        .panel.output h2 { color: #51cf66; }
+
+        .char-count {
+            font-size: 0.8rem;
+            color: #555;
+        }
+
+        textarea {
+            flex: 1;
+            min-height: 400px;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid #333;
+            border-radius: 10px;
+            padding: 15px;
+            color: #fff;
+            font-size: 1rem;
+            line-height: 1.6;
+            resize: vertical;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: #00d4ff;
+        }
+
+        textarea::placeholder {
+            color: #555;
+        }
+
+        .output-text {
+            flex: 1;
+            min-height: 400px;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid #333;
+            border-radius: 10px;
+            padding: 15px;
+            color: #fff;
+            font-size: 1rem;
+            line-height: 1.6;
+            overflow-y: auto;
+            white-space: pre-wrap;
+        }
+
+        .output-text.empty {
+            color: #555;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .actions {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        button {
+            padding: 15px 40px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(90deg, #00d4ff, #7b2cbf);
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.3);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-secondary {
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .loading {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            padding: 40px;
+        }
+
+        .loading.active {
+            display: flex;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid #333;
+            border-top-color: #00d4ff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            color: #888;
+            font-size: 1rem;
+        }
+
+        .loading-steps {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .step {
+            background: rgba(255,255,255,0.1);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: #555;
+            transition: all 0.3s ease;
+        }
+
+        .step.active {
+            background: rgba(0, 212, 255, 0.2);
+            color: #00d4ff;
+        }
+
+        .step.done {
+            background: rgba(81, 207, 102, 0.2);
+            color: #51cf66;
+        }
+
+        .error {
+            background: rgba(255, 107, 107, 0.1);
+            border: 1px solid #ff6b6b;
+            color: #ff6b6b;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+            display: none;
+        }
+
+        .error.active {
+            display: block;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #555;
+            font-size: 0.9rem;
+        }
+
+        .sample-texts {
+            margin-top: 15px;
+        }
+
+        .sample-texts summary {
+            cursor: pointer;
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        .sample-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+
+        .sample-btn {
+            padding: 8px 15px;
+            background: rgba(255,255,255,0.1);
+            border: none;
+            border-radius: 5px;
+            color: #888;
+            cursor: pointer;
+            font-size: 0.85rem;
+        }
+
+        .sample-btn:hover {
+            background: rgba(255,255,255,0.2);
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Tech <span>Seducer</span></h1>
+            <p class="subtitle">Transformacja tekstów technicznych w treści perswazyjne</p>
+        </header>
+
+        <div class="config">
+            <label for="webhook">Webhook URL:</label>
+            <input type="text" id="webhook" placeholder="Wklej URL webhooka z Make.com" />
+        </div>
+
+        <div class="panels">
+            <div class="panel input">
+                <div class="panel-header">
+                    <h2>📄 Tekst oryginalny</h2>
+                    <span class="char-count" id="inputCount">0 znaków</span>
+                </div>
+                <textarea
+                    id="inputText"
+                    placeholder="Wklej tutaj tekst techniczny do transformacji...
+
+Np. instrukcję obsługi, specyfikację produktu, opis techniczny..."
+                ></textarea>
+
+                <details class="sample-texts">
+                    <summary>Przykładowe teksty testowe</summary>
+                    <div class="sample-buttons">
+                        <button class="sample-btn" onclick="loadSample('elevator')">🛗 Instrukcja windy</button>
+                        <button class="sample-btn" onclick="loadSample('grinder')">☕ Młynek do kawy</button>
+                        <button class="sample-btn" onclick="loadSample('laptop')">💻 Specyfikacja laptopa</button>
+                    </div>
+                </details>
+            </div>
+
+            <div class="panel output">
+                <div class="panel-header">
+                    <h2>✨ Tekst przepisany</h2>
+                    <span class="char-count" id="outputCount">0 znaków</span>
+                </div>
+
+                <div class="loading" id="loading">
+                    <div class="spinner"></div>
+                    <div class="loading-text">Transformuję tekst...</div>
+                    <div class="loading-steps">
+                        <span class="step" id="step1">Ożywiacz języka</span>
+                        <span class="step" id="step2">Tłumacz korzyści</span>
+                        <span class="step" id="step3">Detektyw nudy</span>
+                        <span class="step" id="step4">Malarz zmysłów</span>
+                        <span class="step" id="step5">Architekt scenariuszy</span>
+                        <span class="step" id="step6">Kompilacja</span>
+                        <span class="step" id="step7">Przepisywanie</span>
+                    </div>
+                </div>
+
+                <div class="output-text empty" id="outputText">
+                    Tutaj pojawi się przekształcony tekst
+                </div>
+
+                <div class="error" id="error"></div>
+            </div>
+        </div>
+
+        <div class="actions">
+            <button class="btn-secondary" onclick="clearAll()">Wyczyść</button>
+            <button class="btn-primary" id="transformBtn" onclick="transform()">Transformuj</button>
+            <button class="btn-secondary" onclick="copyOutput()">Kopiuj wynik</button>
+        </div>
+
+        <footer>
+            Tech Seducer • AI Day Demo • Make.com + GPT-4o
+        </footer>
+    </div>
+
+    <script>
+        // Przykładowe teksty
+        const samples = {
+            elevator: `Instrukcja użytkowania dźwigu osobowego
+
+1. W celu wezwania kabiny wcisnąć przycisk w kasecie umieszczonej przy drzwiach przystankowych. Przyjęcie wezwania jest potwierdzane podświetleniem przycisku.
+
+2. Po automatycznym otwarciu drzwi należy wejść do kabiny i wcisnąć przycisk przystanku docelowego. Przyjęcie dyspozycji jest potwierdzane podświetleniem przycisku. Drzwi zamykają się automatycznie.
+
+3. Po dojechaniu do przystanku docelowego, którego numer wyświetli się, i po automatycznym otwarciu drzwi należy wyjść z kabiny.
+
+4. Przycisk alarmu włącza alarm i wywołuje połączenie telefoniczne z pogotowiem dźwigowym. Nie używać bez potrzeby.
+
+5. W przypadku pożaru nie korzystać z dźwigu.
+
+6. Dzieciom poniżej lat 12-stu wolno jeździć tylko w towarzystwie dorosłych.`,
+
+            grinder: `Młynek KRUPS GX204 umożliwia szybkie mielenie ziaren kawy i łatwe jej dozowanie do filtra do parzenia kawy.
+
+Działanie:
+- Umieścić urządzenie na solidnym blacie.
+- Napełnić komorę mielenia ilością kawy potrzebną do przygotowania określonej liczby filiżanek.
+- Firma KRUPS zaleca użycie 7 gramów zmielonej kawy do przygotowania ok. 150 ml naparu.
+- Umieścić pokrywkę na podstawie młynka.
+- Podłączyć młynek do gniazda. Aby rozpocząć mielenie, należy nacisnąć przycisk zasilania.
+- Zasilanie pozostanie włączone tylko przez czas wciśnięcia przycisku.
+- Kawa zostanie zmielona drobno lub grubo w zależności od czasu mielenia.
+- Po zakończeniu mielenia należy odłączyć urządzenie od zasilania.
+
+Uwaga: Przed zdjęciem pokrywki należy zaczekać, aż ostrza całkowicie się zatrzymają.`,
+
+            laptop: `Laptop XYZ Pro charakteryzuje się procesorem Intel Core i7 12. generacji, pamięcią RAM 16GB oraz dyskiem SSD 512GB. Urządzenie posiada ekran 14" o rozdzielczości 2.8K. Bateria zapewnia do 15 godzin pracy. Waga wynosi 1.2 kg. Laptop został wyposażony w klawiaturę podświetlaną oraz czytnik linii papilarnych. Obudowa wykonana została z aluminium. Urządzenie posiada dwa porty USB-C z obsługą Thunderbolt 4.`
+        };
+
+        // Licznik znaków
+        document.getElementById('inputText').addEventListener('input', function() {
+            document.getElementById('inputCount').textContent = this.value.length + ' znaków';
+        });
+
+        // Załaduj przykład
+        function loadSample(name) {
+            document.getElementById('inputText').value = samples[name];
+            document.getElementById('inputCount').textContent = samples[name].length + ' znaków';
+        }
+
+        // Wyczyść wszystko
+        function clearAll() {
+            document.getElementById('inputText').value = '';
+            document.getElementById('outputText').textContent = 'Tutaj pojawi się przekształcony tekst';
+            document.getElementById('outputText').classList.add('empty');
+            document.getElementById('inputCount').textContent = '0 znaków';
+            document.getElementById('outputCount').textContent = '0 znaków';
+            document.getElementById('error').classList.remove('active');
+        }
+
+        // Kopiuj wynik
+        function copyOutput() {
+            const output = document.getElementById('outputText').textContent;
+            navigator.clipboard.writeText(output);
+            alert('Skopiowano do schowka!');
+        }
+
+        // Animacja kroków
+        let stepInterval;
+        function animateSteps() {
+            const steps = document.querySelectorAll('.step');
+            let current = 0;
+
+            stepInterval = setInterval(() => {
+                steps.forEach((s, i) => {
+                    s.classList.remove('active');
+                    if (i < current) s.classList.add('done');
+                });
+                if (current < steps.length) {
+                    steps[current].classList.add('active');
+                    current++;
+                }
+            }, 5000); // Co 5 sekund następny krok
+        }
+
+        function stopStepAnimation() {
+            clearInterval(stepInterval);
+            document.querySelectorAll('.step').forEach(s => {
+                s.classList.remove('active');
+                s.classList.add('done');
+            });
+        }
+
+        function resetSteps() {
+            document.querySelectorAll('.step').forEach(s => {
+                s.classList.remove('active', 'done');
+            });
+        }
+
+        // Główna funkcja transformacji
+        async function transform() {
+            const webhookUrl = document.getElementById('webhook').value.trim();
+            const inputText = document.getElementById('inputText').value.trim();
+
+            // Walidacja
+            if (!webhookUrl) {
+                alert('Wklej URL webhooka z Make.com!');
+                return;
+            }
+            if (!inputText) {
+                alert('Wklej tekst do transformacji!');
+                return;
+            }
+
+            // UI: loading state
+            const btn = document.getElementById('transformBtn');
+            const loading = document.getElementById('loading');
+            const outputEl = document.getElementById('outputText');
+            const errorEl = document.getElementById('error');
+
+            btn.disabled = true;
+            btn.textContent = 'Przetwarzam...';
+            loading.classList.add('active');
+            outputEl.style.display = 'none';
+            errorEl.classList.remove('active');
+            resetSteps();
+            animateSteps();
+
+            try {
+                const response = await fetch(webhookUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ text: inputText })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+
+                const data = await response.json();
+
+                // Wyświetl wynik
+                stopStepAnimation();
+                loading.classList.remove('active');
+                outputEl.style.display = 'block';
+                outputEl.classList.remove('empty');
+
+                // Obsłuż różne formaty odpowiedzi
+                let resultText = '';
+                if (typeof data === 'string') {
+                    resultText = data;
+                } else if (data.transformed) {
+                    resultText = data.transformed;
+                } else if (data.result) {
+                    resultText = data.result;
+                } else {
+                    resultText = JSON.stringify(data, null, 2);
+                }
+
+                outputEl.textContent = resultText;
+                document.getElementById('outputCount').textContent = resultText.length + ' znaków';
+
+            } catch (error) {
+                stopStepAnimation();
+                loading.classList.remove('active');
+                outputEl.style.display = 'block';
+                errorEl.classList.add('active');
+                errorEl.textContent = 'Błąd: ' + error.message;
+                console.error('Error:', error);
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Transformuj';
+            }
+        }
+
+        // Zapisz webhook URL w localStorage
+        document.getElementById('webhook').addEventListener('change', function() {
+            localStorage.setItem('techSeducerWebhook', this.value);
+        });
+
+        // Odczytaj webhook URL z localStorage przy starcie
+        window.addEventListener('load', function() {
+            const saved = localStorage.getItem('techSeducerWebhook');
+            if (saved) {
+                document.getElementById('webhook').value = saved;
+            }
+        });
+    </script>
+</body>
+</html>
