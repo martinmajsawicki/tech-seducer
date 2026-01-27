@@ -13,9 +13,9 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
             min-height: 100vh;
-            color: #fff;
+            color: #1a1a2e;
             padding: 20px;
         }
 
@@ -30,59 +30,64 @@
         }
 
         h1 {
-            font-size: 2.5rem;
+            font-size: 3rem;
             font-weight: 300;
             margin-bottom: 10px;
+            color: #2d3436;
         }
 
         h1 span {
             font-weight: 700;
-            background: linear-gradient(90deg, #00d4ff, #7b2cbf);
+            background: linear-gradient(90deg, #6c5ce7, #a29bfe, #fd79a8);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
 
         .subtitle {
-            color: #888;
-            font-size: 1.1rem;
+            color: #636e72;
+            font-size: 1.2rem;
         }
 
         .config {
-            background: rgba(255,255,255,0.05);
-            border-radius: 10px;
+            background: #fff;
+            border-radius: 15px;
             padding: 15px 20px;
             margin-bottom: 20px;
             display: flex;
             align-items: center;
             gap: 15px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
         }
 
         .config label {
-            color: #888;
+            color: #636e72;
             white-space: nowrap;
+            font-weight: 500;
         }
 
         .config input {
             flex: 1;
-            background: rgba(0,0,0,0.3);
-            border: 1px solid #333;
-            border-radius: 5px;
-            padding: 10px 15px;
-            color: #fff;
-            font-size: 0.9rem;
+            background: #f5f7fa;
+            border: 2px solid #dfe6e9;
+            border-radius: 10px;
+            padding: 12px 15px;
+            color: #2d3436;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
         }
 
         .config input:focus {
             outline: none;
-            border-color: #00d4ff;
+            border-color: #6c5ce7;
+            box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.1);
         }
 
         .panels {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin-bottom: 20px;
+            gap: 25px;
+            margin-bottom: 25px;
         }
 
         @media (max-width: 900px) {
@@ -92,11 +97,26 @@
         }
 
         .panel {
-            background: rgba(255,255,255,0.05);
-            border-radius: 15px;
-            padding: 20px;
+            background: #fff;
+            border-radius: 20px;
+            padding: 25px;
             display: flex;
             flex-direction: column;
+            box-shadow: 0 5px 30px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+        }
+
+        .panel.input {
+            border: 2px solid #dfe6e9;
+        }
+
+        .panel.output {
+            border: 2px solid #dfe6e9;
+        }
+
+        .panel.output.has-result {
+            border-color: #00b894;
+            box-shadow: 0 5px 40px rgba(0, 184, 148, 0.2);
         }
 
         .panel-header {
@@ -107,63 +127,74 @@
         }
 
         .panel h2 {
-            font-size: 1rem;
-            font-weight: 500;
-            color: #888;
+            font-size: 0.9rem;
+            font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
-        .panel.input h2 { color: #ff6b6b; }
-        .panel.output h2 { color: #51cf66; }
+        .panel.input h2 { color: #e17055; }
+        .panel.output h2 { color: #00b894; }
 
         .char-count {
             font-size: 0.8rem;
-            color: #555;
+            color: #b2bec3;
+            font-weight: 500;
         }
 
         textarea {
             flex: 1;
-            min-height: 400px;
-            background: rgba(0,0,0,0.3);
-            border: 1px solid #333;
-            border-radius: 10px;
-            padding: 15px;
-            color: #fff;
+            min-height: 350px;
+            background: #f8f9fa;
+            border: 2px solid #eee;
+            border-radius: 12px;
+            padding: 18px;
+            color: #2d3436;
             font-size: 1rem;
-            line-height: 1.6;
+            line-height: 1.7;
             resize: vertical;
+            transition: all 0.3s ease;
         }
 
         textarea:focus {
             outline: none;
-            border-color: #00d4ff;
+            border-color: #6c5ce7;
+            background: #fff;
         }
 
         textarea::placeholder {
-            color: #555;
+            color: #b2bec3;
         }
 
         .output-text {
             flex: 1;
-            min-height: 400px;
-            background: rgba(0,0,0,0.3);
-            border: 1px solid #333;
-            border-radius: 10px;
-            padding: 15px;
-            color: #fff;
+            min-height: 350px;
+            background: #f8f9fa;
+            border: 2px solid #eee;
+            border-radius: 12px;
+            padding: 18px;
+            color: #2d3436;
             font-size: 1rem;
-            line-height: 1.6;
+            line-height: 1.7;
             overflow-y: auto;
             white-space: pre-wrap;
         }
 
         .output-text.empty {
-            color: #555;
+            color: #b2bec3;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
+            font-size: 1.1rem;
+        }
+
+        .output-text.has-result {
+            background: linear-gradient(135deg, #f8fff8 0%, #f0fff4 100%);
+            border-color: #00b894;
         }
 
         .actions {
@@ -173,38 +204,41 @@
         }
 
         button {
-            padding: 15px 40px;
+            padding: 16px 35px;
             border: none;
-            border-radius: 10px;
-            font-size: 1.1rem;
+            border-radius: 12px;
+            font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
         }
 
         .btn-primary {
-            background: linear-gradient(90deg, #00d4ff, #7b2cbf);
+            background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);
             color: #fff;
+            box-shadow: 0 4px 15px rgba(108, 92, 231, 0.4);
         }
 
         .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(108, 92, 231, 0.5);
         }
 
         .btn-primary:disabled {
-            opacity: 0.5;
+            opacity: 0.6;
             cursor: not-allowed;
             transform: none;
         }
 
         .btn-secondary {
-            background: rgba(255,255,255,0.1);
-            color: #fff;
+            background: #fff;
+            color: #636e72;
+            border: 2px solid #dfe6e9;
         }
 
         .btn-secondary:hover {
-            background: rgba(255,255,255,0.2);
+            background: #f5f7fa;
+            border-color: #b2bec3;
         }
 
         .loading {
@@ -212,64 +246,73 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 20px;
+            gap: 25px;
             padding: 40px;
+            min-height: 350px;
         }
 
         .loading.active {
             display: flex;
         }
 
-        .spinner {
-            width: 50px;
-            height: 50px;
-            border: 3px solid #333;
-            border-top-color: #00d4ff;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
+        .magic-icon {
+            font-size: 4rem;
+            animation: pulse 1.5s ease-in-out infinite;
         }
 
-        @keyframes spin {
-            to { transform: rotate(360deg); }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.8; }
         }
 
         .loading-text {
-            color: #888;
-            font-size: 1rem;
+            color: #6c5ce7;
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .loading-subtext {
+            color: #b2bec3;
+            font-size: 0.95rem;
         }
 
         .loading-steps {
             display: flex;
-            gap: 10px;
+            gap: 8px;
             flex-wrap: wrap;
             justify-content: center;
+            max-width: 500px;
         }
 
         .step {
-            background: rgba(255,255,255,0.1);
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            color: #555;
-            transition: all 0.3s ease;
+            background: #f5f7fa;
+            padding: 8px 14px;
+            border-radius: 25px;
+            font-size: 0.85rem;
+            color: #b2bec3;
+            transition: all 0.4s ease;
+            border: 2px solid transparent;
         }
 
         .step.active {
-            background: rgba(0, 212, 255, 0.2);
-            color: #00d4ff;
+            background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);
+            color: #fff;
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(108, 92, 231, 0.3);
         }
 
         .step.done {
-            background: rgba(81, 207, 102, 0.2);
-            color: #51cf66;
+            background: #d4f8e8;
+            color: #00b894;
+            border-color: #00b894;
         }
 
         .error {
-            background: rgba(255, 107, 107, 0.1);
-            border: 1px solid #ff6b6b;
-            color: #ff6b6b;
-            padding: 15px;
-            border-radius: 10px;
+            background: #fff5f5;
+            border: 2px solid #ff7675;
+            color: #d63031;
+            padding: 15px 20px;
+            border-radius: 12px;
             margin-top: 15px;
             display: none;
         }
@@ -281,7 +324,7 @@
         footer {
             text-align: center;
             margin-top: 30px;
-            color: #555;
+            color: #b2bec3;
             font-size: 0.9rem;
         }
 
@@ -291,42 +334,103 @@
 
         .sample-texts summary {
             cursor: pointer;
-            color: #888;
+            color: #6c5ce7;
             font-size: 0.9rem;
+            font-weight: 500;
         }
 
         .sample-buttons {
             display: flex;
             gap: 10px;
-            margin-top: 10px;
+            margin-top: 12px;
             flex-wrap: wrap;
         }
 
         .sample-btn {
-            padding: 8px 15px;
-            background: rgba(255,255,255,0.1);
-            border: none;
-            border-radius: 5px;
-            color: #888;
+            padding: 10px 16px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #fff 100%);
+            border: 2px solid #dfe6e9;
+            border-radius: 8px;
+            color: #636e72;
             cursor: pointer;
             font-size: 0.85rem;
+            transition: all 0.3s ease;
         }
 
         .sample-btn:hover {
-            background: rgba(255,255,255,0.2);
-            color: #fff;
+            border-color: #6c5ce7;
+            color: #6c5ce7;
+            transform: translateY(-2px);
+        }
+
+        /* Confetti styles */
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            top: -10px;
+            animation: confetti-fall 3s linear forwards;
+            z-index: 1000;
+        }
+
+        @keyframes confetti-fall {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        /* Success animation */
+        @keyframes success-glow {
+            0% { box-shadow: 0 5px 30px rgba(0, 184, 148, 0.2); }
+            50% { box-shadow: 0 5px 50px rgba(0, 184, 148, 0.4); }
+            100% { box-shadow: 0 5px 30px rgba(0, 184, 148, 0.2); }
+        }
+
+        .panel.output.success-animation {
+            animation: success-glow 1s ease-in-out 3;
+        }
+
+        /* Progress bar */
+        .progress-container {
+            width: 100%;
+            max-width: 400px;
+            height: 6px;
+            background: #eee;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #6c5ce7, #a29bfe, #fd79a8);
+            border-radius: 3px;
+            animation: progress 35s ease-out forwards;
+        }
+
+        @keyframes progress {
+            0% { width: 0%; }
+            20% { width: 25%; }
+            40% { width: 45%; }
+            60% { width: 65%; }
+            80% { width: 85%; }
+            100% { width: 95%; }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>Tech <span>Seducer</span></h1>
+            <h1>Tech <span>Seducer</span> ✨</h1>
             <p class="subtitle">Transformacja tekstów technicznych w treści perswazyjne</p>
         </header>
 
         <div class="config">
-            <label for="webhook">Webhook URL:</label>
+            <label for="webhook">🔗 Webhook URL:</label>
             <input type="text" id="webhook" placeholder="Wklej URL webhooka z Make.com" />
         </div>
 
@@ -344,7 +448,7 @@ Np. instrukcję obsługi, specyfikację produktu, opis techniczny..."
                 ></textarea>
 
                 <details class="sample-texts">
-                    <summary>Przykładowe teksty testowe</summary>
+                    <summary>📚 Przykładowe teksty testowe</summary>
                     <div class="sample-buttons">
                         <button class="sample-btn" onclick="loadSample('elevator')">🛗 Instrukcja windy</button>
                         <button class="sample-btn" onclick="loadSample('grinder')">☕ Młynek do kawy</button>
@@ -353,28 +457,32 @@ Np. instrukcję obsługi, specyfikację produktu, opis techniczny..."
                 </details>
             </div>
 
-            <div class="panel output">
+            <div class="panel output" id="outputPanel">
                 <div class="panel-header">
                     <h2>✨ Tekst przepisany</h2>
                     <span class="char-count" id="outputCount">0 znaków</span>
                 </div>
 
                 <div class="loading" id="loading">
-                    <div class="spinner"></div>
-                    <div class="loading-text">Transformuję tekst...</div>
+                    <div class="magic-icon">🪄</div>
+                    <div class="loading-text">Magia w toku...</div>
+                    <div class="progress-container">
+                        <div class="progress-bar" id="progressBar"></div>
+                    </div>
+                    <div class="loading-subtext">5 agentów AI analizuje Twój tekst</div>
                     <div class="loading-steps">
-                        <span class="step" id="step1">Ożywiacz języka</span>
-                        <span class="step" id="step2">Tłumacz korzyści</span>
-                        <span class="step" id="step3">Detektyw nudy</span>
-                        <span class="step" id="step4">Malarz zmysłów</span>
-                        <span class="step" id="step5">Architekt scenariuszy</span>
-                        <span class="step" id="step6">Kompilacja</span>
-                        <span class="step" id="step7">Przepisywanie</span>
+                        <span class="step" id="step1">🔤 Język</span>
+                        <span class="step" id="step2">💰 Korzyści</span>
+                        <span class="step" id="step3">😴 Nuda</span>
+                        <span class="step" id="step4">👁️ Zmysły</span>
+                        <span class="step" id="step5">🎭 Scenariusze</span>
+                        <span class="step" id="step6">📋 Kompilacja</span>
+                        <span class="step" id="step7">✍️ Przepisywanie</span>
                     </div>
                 </div>
 
                 <div class="output-text empty" id="outputText">
-                    Tutaj pojawi się przekształcony tekst
+                    ✨ Tutaj pojawi się przekształcony tekst
                 </div>
 
                 <div class="error" id="error"></div>
@@ -382,9 +490,9 @@ Np. instrukcję obsługi, specyfikację produktu, opis techniczny..."
         </div>
 
         <div class="actions">
-            <button class="btn-secondary" onclick="clearAll()">Wyczyść</button>
-            <button class="btn-primary" id="transformBtn" onclick="transform()">Transformuj</button>
-            <button class="btn-secondary" onclick="copyOutput()">Kopiuj wynik</button>
+            <button class="btn-secondary" onclick="clearAll()">🗑️ Wyczyść</button>
+            <button class="btn-primary" id="transformBtn" onclick="transform()">🚀 Transformuj</button>
+            <button class="btn-secondary" onclick="copyOutput()">📋 Kopiuj wynik</button>
         </div>
 
         <footer>
@@ -426,6 +534,25 @@ Uwaga: Przed zdjęciem pokrywki należy zaczekać, aż ostrza całkowicie się z
             laptop: `Laptop XYZ Pro charakteryzuje się procesorem Intel Core i7 12. generacji, pamięcią RAM 16GB oraz dyskiem SSD 512GB. Urządzenie posiada ekran 14" o rozdzielczości 2.8K. Bateria zapewnia do 15 godzin pracy. Waga wynosi 1.2 kg. Laptop został wyposażony w klawiaturę podświetlaną oraz czytnik linii papilarnych. Obudowa wykonana została z aluminium. Urządzenie posiada dwa porty USB-C z obsługą Thunderbolt 4.`
         };
 
+        // Confetti effect
+        function createConfetti() {
+            const colors = ['#6c5ce7', '#a29bfe', '#fd79a8', '#00b894', '#ffeaa7', '#74b9ff'];
+            for (let i = 0; i < 100; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + 'vw';
+                    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+                    confetti.style.width = (Math.random() * 10 + 5) + 'px';
+                    confetti.style.height = confetti.style.width;
+                    document.body.appendChild(confetti);
+
+                    setTimeout(() => confetti.remove(), 3000);
+                }, i * 30);
+            }
+        }
+
         // Licznik znaków
         document.getElementById('inputText').addEventListener('input', function() {
             document.getElementById('inputCount').textContent = this.value.length + ' znaków';
@@ -440,8 +567,10 @@ Uwaga: Przed zdjęciem pokrywki należy zaczekać, aż ostrza całkowicie się z
         // Wyczyść wszystko
         function clearAll() {
             document.getElementById('inputText').value = '';
-            document.getElementById('outputText').textContent = 'Tutaj pojawi się przekształcony tekst';
+            document.getElementById('outputText').textContent = '✨ Tutaj pojawi się przekształcony tekst';
             document.getElementById('outputText').classList.add('empty');
+            document.getElementById('outputText').classList.remove('has-result');
+            document.getElementById('outputPanel').classList.remove('has-result', 'success-animation');
             document.getElementById('inputCount').textContent = '0 znaków';
             document.getElementById('outputCount').textContent = '0 znaków';
             document.getElementById('error').classList.remove('active');
@@ -451,7 +580,11 @@ Uwaga: Przed zdjęciem pokrywki należy zaczekać, aż ostrza całkowicie się z
         function copyOutput() {
             const output = document.getElementById('outputText').textContent;
             navigator.clipboard.writeText(output);
-            alert('Skopiowano do schowka!');
+
+            const btn = event.target;
+            const originalText = btn.textContent;
+            btn.textContent = '✅ Skopiowano!';
+            setTimeout(() => btn.textContent = originalText, 2000);
         }
 
         // Animacja kroków
@@ -459,6 +592,12 @@ Uwaga: Przed zdjęciem pokrywki należy zaczekać, aż ostrza całkowicie się z
         function animateSteps() {
             const steps = document.querySelectorAll('.step');
             let current = 0;
+
+            // Reset progress bar
+            const progressBar = document.getElementById('progressBar');
+            progressBar.style.animation = 'none';
+            progressBar.offsetHeight; // Trigger reflow
+            progressBar.style.animation = 'progress 35s ease-out forwards';
 
             stepInterval = setInterval(() => {
                 steps.forEach((s, i) => {
@@ -469,7 +608,7 @@ Uwaga: Przed zdjęciem pokrywki należy zaczekać, aż ostrza całkowicie się z
                     steps[current].classList.add('active');
                     current++;
                 }
-            }, 5000); // Co 5 sekund następny krok
+            }, 4000);
         }
 
         function stopStepAnimation() {
@@ -493,11 +632,11 @@ Uwaga: Przed zdjęciem pokrywki należy zaczekać, aż ostrza całkowicie się z
 
             // Walidacja
             if (!webhookUrl) {
-                alert('Wklej URL webhooka z Make.com!');
+                alert('🔗 Wklej URL webhooka z Make.com!');
                 return;
             }
             if (!inputText) {
-                alert('Wklej tekst do transformacji!');
+                alert('📄 Wklej tekst do transformacji!');
                 return;
             }
 
@@ -505,12 +644,14 @@ Uwaga: Przed zdjęciem pokrywki należy zaczekać, aż ostrza całkowicie się z
             const btn = document.getElementById('transformBtn');
             const loading = document.getElementById('loading');
             const outputEl = document.getElementById('outputText');
+            const outputPanel = document.getElementById('outputPanel');
             const errorEl = document.getElementById('error');
 
             btn.disabled = true;
-            btn.textContent = 'Przetwarzam...';
+            btn.textContent = '⏳ Przetwarzam...';
             loading.classList.add('active');
             outputEl.style.display = 'none';
+            outputPanel.classList.remove('has-result', 'success-animation');
             errorEl.classList.remove('active');
             resetSteps();
             animateSteps();
@@ -535,6 +676,8 @@ Uwaga: Przed zdjęciem pokrywki należy zaczekać, aż ostrza całkowicie się z
                 loading.classList.remove('active');
                 outputEl.style.display = 'block';
                 outputEl.classList.remove('empty');
+                outputEl.classList.add('has-result');
+                outputPanel.classList.add('has-result', 'success-animation');
 
                 // Obsłuż różne formaty odpowiedzi
                 let resultText = '';
@@ -551,16 +694,19 @@ Uwaga: Przed zdjęciem pokrywki należy zaczekać, aż ostrza całkowicie się z
                 outputEl.textContent = resultText;
                 document.getElementById('outputCount').textContent = resultText.length + ' znaków';
 
+                // Confetti!
+                createConfetti();
+
             } catch (error) {
                 stopStepAnimation();
                 loading.classList.remove('active');
                 outputEl.style.display = 'block';
                 errorEl.classList.add('active');
-                errorEl.textContent = 'Błąd: ' + error.message;
+                errorEl.textContent = '❌ Błąd: ' + error.message;
                 console.error('Error:', error);
             } finally {
                 btn.disabled = false;
-                btn.textContent = 'Transformuj';
+                btn.textContent = '🚀 Transformuj';
             }
         }
 
