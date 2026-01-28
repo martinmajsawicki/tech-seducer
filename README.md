@@ -14,6 +14,12 @@ Idealne do:
 **Frontend:** Strona na GitHub Pages
 **Backend:** Workflow w Make.com (7 agentów AI)
 
+## Wymagania
+
+- Konto na [GitHub](https://github.com) (do hostowania frontendu)
+- Konto na [Make.com](https://make.com) (darmowe wystarczy do testów)
+- Klucz API do [OpenAI](https://platform.openai.com/api-keys)
+
 ## Jak działa
 
 Multi-agentowy workflow, gdzie 5 specjalistów AI analizuje tekst sekwencyjnie:
