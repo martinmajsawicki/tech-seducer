@@ -669,7 +669,7 @@ Uwaga: Przed zdjęciem pokrywki należy zaczekać, aż ostrza całkowicie się z
                     throw new Error(`HTTP ${response.status}: ${response.statusText}`);
                 }
 
-                const data = await response.json();
+                const resultText = await response.text();
 
                 // Wyświetl wynik
                 stopStepAnimation();
@@ -678,18 +678,6 @@ Uwaga: Przed zdjęciem pokrywki należy zaczekać, aż ostrza całkowicie się z
                 outputEl.classList.remove('empty');
                 outputEl.classList.add('has-result');
                 outputPanel.classList.add('has-result', 'success-animation');
-
-                // Obsłuż różne formaty odpowiedzi
-                let resultText = '';
-                if (typeof data === 'string') {
-                    resultText = data;
-                } else if (data.transformed) {
-                    resultText = data.transformed;
-                } else if (data.result) {
-                    resultText = data.result;
-                } else {
-                    resultText = JSON.stringify(data, null, 2);
-                }
 
                 outputEl.textContent = resultText;
                 document.getElementById('outputCount').textContent = resultText.length + ' znaków';
