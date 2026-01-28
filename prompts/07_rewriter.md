@@ -111,26 +111,13 @@ Jutro robisz to samo. Bez ładowarki.
 
 ## FORMAT ODPOWIEDZI
 
-Zwróć:
+Zwróć TYLKO przepisany tekst, gotowy do użycia.
 
-1. **TEKST PRZEPISANY** - gotowy do użycia
+- Bez nagłówków typu "TEKST PRZEPISANY"
+- Bez changelog
+- Bez checklist
+- Bez komentarzy
+- Bez wyjaśnień
+- Bez wariantów
 
-2. **CHANGELOG** - co zmieniłeś:
-   | Oryginał | Zmiana | Powód (z briefa) |
-   |----------|--------|------------------|
-   | "..." | "..." | przepisz #1 |
-
-3. **ZREALIZOWANE PUNKTY Z BRIEFA** - checklist:
-   - [x] przepisz #1
-   - [x] dodaj_scenariusze #1
-   - [ ] (jeśli czegoś nie udało się zrealizować - wyjaśnij)
-
-4. **WARIANTY (opcjonalnie)** - jeśli widzisz alternatywną wersję
-
----
-
-## UWAGI
-
-- Jeśli brief zawiera sprzeczne instrukcje - wybierz sensowniejszą i zanotuj
-- Jeśli tekst oryginalny nie zawiera wystarczających danych do realizacji punktu - oznacz jako [BRAK DANYCH]
-- Jeśli coś brzmi nienaturalnie po przepisaniu - popraw, ale zanotuj odstępstwo od briefa
+Sam tekst. Nic więcej.
