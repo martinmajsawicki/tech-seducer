@@ -453,6 +453,7 @@ Np. instrukcję obsługi, specyfikację produktu, opis techniczny..."
                         <button class="sample-btn" onclick="loadSample('elevator')">🛗 Instrukcja windy</button>
                         <button class="sample-btn" onclick="loadSample('grinder')">☕ Młynek do kawy</button>
                         <button class="sample-btn" onclick="loadSample('laptop')">💻 Specyfikacja laptopa</button>
+                        <button class="sample-btn" onclick="loadSample('panini')">🥪 Opiekacz do panini</button>
                     </div>
                 </details>
             </div>
@@ -531,7 +532,42 @@ Działanie:
 
 Uwaga: Przed zdjęciem pokrywki należy zaczekać, aż ostrza całkowicie się zatrzymają.`,
 
-            laptop: `Laptop XYZ Pro charakteryzuje się procesorem Intel Core i7 12. generacji, pamięcią RAM 16GB oraz dyskiem SSD 512GB. Urządzenie posiada ekran 14" o rozdzielczości 2.8K. Bateria zapewnia do 15 godzin pracy. Waga wynosi 1.2 kg. Laptop został wyposażony w klawiaturę podświetlaną oraz czytnik linii papilarnych. Obudowa wykonana została z aluminium. Urządzenie posiada dwa porty USB-C z obsługą Thunderbolt 4.`
+            laptop: `Laptop XYZ Pro charakteryzuje się procesorem Intel Core i7 12. generacji, pamięcią RAM 16GB oraz dyskiem SSD 512GB. Urządzenie posiada ekran 14" o rozdzielczości 2.8K. Bateria zapewnia do 15 godzin pracy. Waga wynosi 1.2 kg. Laptop został wyposażony w klawiaturę podświetlaną oraz czytnik linii papilarnych. Obudowa wykonana została z aluminium. Urządzenie posiada dwa porty USB-C z obsługą Thunderbolt 4.`,
+
+            panini: `OPIEKACZ DO PANINI SPM 2000 D2 - INSTRUKCJA OBSŁUGI
+
+Urządzenie służy do opiekania bułek i kanapek typu panini lub do grillowania innych produktów spożywczych. Nie jest przeznaczone do zastosowań komercyjnych ani przemysłowych. Urządzenie jest przeznaczone wyłącznie do użytku w prywatnych gospodarstwach domowych.
+
+BEZPIECZEŃSTWO
+- Przed użyciem sprawdź, czy urządzenie nie ma widocznych uszkodzeń. Nie uruchamiaj uszkodzonego ani upuszczonego urządzenia.
+- Urządzenie może być używane przez dzieci od 8 roku życia oraz osoby o zmniejszonych zdolnościach fizycznych, sensorycznych lub umysłowych wyłącznie pod nadzorem lub po przeszkoleniu.
+- Przed czyszczeniem odczekaj do całkowitego ostygnięcia – niebezpieczeństwo poparzenia!
+- Nigdy nie zanurzaj urządzenia w wodzie ani innych cieczach.
+- Powierzchnia urządzenia w czasie pracy nagrzewa się do wysokiej temperatury. Dotykaj tylko czarnej części uchwytu.
+- Chroń powłokę przeciwdziałającą przywieraniu – nie używaj metalowych przedmiotów (noży, widelców).
+
+ELEMENTY OBSŁUGOWE
+1. Czerwona kontrolka „Zasilanie"
+2. Regulator mocy grzania
+3. Zamek bezpieczeństwa
+4. Zielona kontrolka „Gotowość"
+5. Uchwyt
+6. Tacka wychwytująca tłuszcz
+7. Płytki grzewcze
+
+OBSŁUGA
+1. Wsuń tackę na tłuszcz.
+2. Podłącz urządzenie. Zielona kontrolka „Gotowość" świeci się przy ustawieniu MIN.
+3. Ustaw żądaną moc. Zielona kontrolka zgaśnie, a zapali się czerwona „Zasilanie".
+4. Gdy temperatura zostanie osiągnięta, czerwona kontrolka zgaśnie, a zielona zapali się ponownie.
+5. Połóż produkty na dolnej płytce i zamknij pokrywę. Ruchoma górna płytka dopasuje się do grubości produktów.
+6. Po zakończeniu grillowania wyjmij produkty (nie używaj metalowych narzędzi).
+
+PRZEPIS - Panini ze szpinakiem i serem:
+250g szpinaku, 1 cebula, 1 czosnek, 4 kromki chleba, 75g mozzarelli, 20g orzeszków piniowych. Szpinak podsmażyć z cebulą i czosnkiem, doprawić cytryną. Chleb posmarować masłem ziołowym, nałożyć szpinak, mozzarellę i orzeszki. Opiekać na złoto-brązowo.
+
+DANE TECHNICZNE
+Zasilanie: 220-240 V, 50 Hz | Pobór mocy: 2000 W | 3 lata gwarancji`
         };
 
         // Confetti effect
@@ -660,7 +696,7 @@ Uwaga: Przed zdjęciem pokrywki należy zaczekać, aż ostrza całkowicie się z
                 const response = await fetch(webhookUrl, {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json',
+                        'Content-Type': 'text/plain',
                     },
                     body: JSON.stringify({ text: inputText })
                 });
