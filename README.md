@@ -1,8 +1,18 @@
 # Tech Seducer
 
-**AI-powered tool that transforms dry technical texts into persuasive, engaging content.**
+**Strona demonstracyjna do prezentacji transformacji tekstów technicznych w treści perswazyjne.**
 
-Narzędzie do transformacji suchych tekstów technicznych (instrukcje, specyfikacje, opisy produktów) w angażujące, perswazyjne treści marketingowe.
+## Po co to jest?
+
+Narzędzie do pokazywania efektu "przed i po" - wklejasz suchy tekst techniczny (instrukcję, specyfikację, opis produktu), a po chwili widzisz obok angażującą, perswazyjną wersję.
+
+Idealne do:
+- Demo na AI Day / prezentacji firmowej
+- Pokazania możliwości AI w copywritingu
+- Szkolenia z pisania tekstów marketingowych
+
+**Frontend:** Strona na GitHub Pages
+**Backend:** Workflow w Make.com (7 agentów AI)
 
 ## Jak działa
 
@@ -22,9 +32,9 @@ Następnie:
 
 ## Stack
 
-- **Frontend:** Statyczna strona HTML (GitHub Pages)
+- **Frontend:** HTML + GitHub Pages
 - **Backend:** Make.com workflow
-- **AI:** OpenAI GPT-4o (`chatgpt-4o-latest`)
+- **AI:** OpenAI GPT-4o
 
 ## Status
 
