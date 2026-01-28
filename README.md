@@ -80,6 +80,63 @@ Bateria? 15 godzin - cały lot do Tokio i jeszcze zostanie na mail po wylądowan
 Ten moment, gdy zamykasz laptopa o 22:00, a bateria wciąż na 30%.
 ```
 
+## Instalacja
+
+### 1. GitHub Pages (Frontend)
+
+1. Sforkuj lub sklonuj repozytorium
+2. Wejdź w **Settings** → **Pages**
+3. W sekcji "Source" wybierz:
+   - Branch: `main`
+   - Folder: `/ (root)`
+4. Kliknij **Save**
+5. Po chwili strona będzie dostępna pod: `https://[twój-username].github.io/tech-seducer/`
+
+### 2. Make.com (Backend)
+
+1. Zaloguj się do [Make.com](https://make.com)
+2. Utwórz nowy scenariusz
+3. Kliknij **...** (menu) → **Import Blueprint**
+4. Wgraj plik `make_workflow/TechSeducer_Sequential.json`
+5. Skonfiguruj połączenie OpenAI:
+   - Kliknij na pierwszy moduł OpenAI
+   - Dodaj Connection → wklej swój API key
+   - Użyj tego samego połączenia dla wszystkich modułów
+6. **Uzupełnij prompty** - blueprint zawiera skrócone wersje, zamień na pełne z folderu `prompts/`
+7. Kliknij **Run once** aby przetestować
+8. Skopiuj URL webhooka z pierwszego modułu
+
+### 3. Połączenie Frontend + Backend
+
+1. Otwórz stronę GitHub Pages
+2. Wklej URL webhooka w pole na górze
+3. Wpisz tekst techniczny lub użyj przykładu
+4. Kliknij **Transformuj**
+
+## Użycie
+
+1. **Wklej tekst** - instrukcję, specyfikację, opis produktu
+2. **Kliknij Transformuj** - poczekaj ~2 minuty
+3. **Gotowe** - skopiuj przepisany tekst
+
+### Przykładowe teksty do testów
+
+Strona zawiera 3 wbudowane przykłady:
+- 🛗 Instrukcja windy
+- ☕ Młynek do kawy
+- 💻 Specyfikacja laptopa
+
+## Konfiguracja Make.com
+
+| Parametr | Wartość |
+|----------|---------|
+| Model | `chatgpt-4o-latest` |
+| Temperature (Agenci 1-5) | `0.8` |
+| Temperature (Kompilator) | `0.3` |
+| Max tokens (Agenci) | `2048` |
+| Max tokens (Kompilator) | `3000` |
+| Max tokens (Rewriter) | `4000` |
+
 ## Licencja
 
 MIT

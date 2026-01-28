@@ -1,0 +1,282 @@
+{
+    "name": "Tech Seducer Sequential",
+    "flow": [
+        {
+            "id": 1,
+            "module": "gateway:CustomWebHook",
+            "version": 1,
+            "parameters": {
+                "hook": null,
+                "maxResults": 1
+            },
+            "mapper": {},
+            "metadata": {
+                "designer": {"x": 0, "y": 0},
+                "restore": {
+                    "parameters": {
+                        "hook": {"label": "Tech Seducer Input"}
+                    }
+                }
+            }
+        },
+        {
+            "id": 2,
+            "module": "openai-gpt-3:CreateCompletion",
+            "version": 1,
+            "parameters": {"__IMTCONN__": null},
+            "mapper": {
+                "model": "chatgpt-4o-latest",
+                "select": "chat",
+                "max_tokens": "2048",
+                "temperature": "0.8",
+                "n_completions": "1",
+                "response_format": "text",
+                "messages": [
+                    {
+                        "role": "system",
+                        "content": "Jesteś ekspertem od żywego języka w tekstach technicznych. Szukasz martwego języka - korpomowy, strony biernej, nominalizacji, braku człowieka w tekście.\n\nTwój wzorzec: Apple, Dyson - prostota, bezpośredniość, elegancja.\n\nAnalizuj tekst i zwróć:\n1. MARTWE KONSTRUKCJE - fragment + propozycja zamiany\n2. STRONA BIERNA - fragment + kto robi + propozycja\n3. NOMINALIZACJE - fragment + propozycja\n4. TOP 3 ZAMIANY - najważniejsze do przepisania\n\nFormat: Markdown z tabelami. Bądź konkretny - cytuj dokładne fragmenty."
+                    },
+                    {
+                        "role": "user",
+                        "content": "{{1.text}}"
+                    }
+                ]
+            },
+            "metadata": {
+                "designer": {"x": 300, "y": 0},
+                "restore": {
+                    "expect": {
+                        "model": {"label": "chatgpt-4o-latest"},
+                        "select": {"label": "Create a Chat Completion"}
+                    }
+                }
+            }
+        },
+        {
+            "id": 3,
+            "module": "openai-gpt-3:CreateCompletion",
+            "version": 1,
+            "parameters": {"__IMTCONN__": null},
+            "mapper": {
+                "model": "chatgpt-4o-latest",
+                "select": "chat",
+                "max_tokens": "2048",
+                "temperature": "0.8",
+                "n_completions": "1",
+                "response_format": "text",
+                "messages": [
+                    {
+                        "role": "system",
+                        "content": "Jesteś ekspertem od zamiany CECH na KORZYŚCI. Klienta nie obchodzi co produkt MA - obchodzi go co Z TEGO BĘDZIE MIAŁ.\n\nMantra: \"Features tell, benefits sell.\"\n\nAnalizuj tekst i zwróć:\n1. CECHY BEZ KORZYŚCI - cecha + pytanie klienta \"co mi to daje?\" + propozycja korzyści\n2. PUSTE PRZYMIOTNIKI - fragment + co to znaczy dla klienta + propozycja\n3. TEST \"NO I CO Z TEGO?\" - zdania które nie przechodzą testu + wersja z korzyścią\n4. TOP 5 TŁUMACZEŃ CECHA→KORZYŚĆ\n\nFormat: Markdown z tabelami."
+                    },
+                    {
+                        "role": "user",
+                        "content": "{{1.text}}"
+                    }
+                ]
+            },
+            "metadata": {
+                "designer": {"x": 600, "y": 0},
+                "restore": {
+                    "expect": {
+                        "model": {"label": "chatgpt-4o-latest"},
+                        "select": {"label": "Create a Chat Completion"}
+                    }
+                }
+            }
+        },
+        {
+            "id": 4,
+            "module": "openai-gpt-3:CreateCompletion",
+            "version": 1,
+            "parameters": {"__IMTCONN__": null},
+            "mapper": {
+                "model": "chatgpt-4o-latest",
+                "select": "chat",
+                "max_tokens": "2048",
+                "temperature": "0.8",
+                "n_completions": "1",
+                "response_format": "text",
+                "messages": [
+                    {
+                        "role": "system",
+                        "content": "Jesteś detektywem nudy. Szukasz momentów, gdzie klient przestanie czytać, gdzie pomyśli \"to samo co wszędzie\".\n\nMantra: \"Nuda to śmierć tekstu. Klient ma 1000 alternatyw.\"\n\nAnalizuj tekst i zwróć:\n1. GENERYCZNE FRAGMENTY - fragment + dlaczego nudne + propozycja ożywienia\n2. PUSTOSŁOWIE DO USUNIĘCIA - fragment + akcja (usuń/zamień)\n3. BRAK MOMENTU WOW - czy jest coś zaskakującego? jeśli nie, co mogłoby być?\n4. TOP 3 MIEJSCA DO OŻYWIENIA\n\nFormat: Markdown z tabelami."
+                    },
+                    {
+                        "role": "user",
+                        "content": "{{1.text}}"
+                    }
+                ]
+            },
+            "metadata": {
+                "designer": {"x": 900, "y": 0},
+                "restore": {
+                    "expect": {
+                        "model": {"label": "chatgpt-4o-latest"},
+                        "select": {"label": "Create a Chat Completion"}
+                    }
+                }
+            }
+        },
+        {
+            "id": 5,
+            "module": "openai-gpt-3:CreateCompletion",
+            "version": 1,
+            "parameters": {"__IMTCONN__": null},
+            "mapper": {
+                "model": "chatgpt-4o-latest",
+                "select": "chat",
+                "max_tokens": "2048",
+                "temperature": "0.8",
+                "n_completions": "1",
+                "response_format": "text",
+                "messages": [
+                    {
+                        "role": "system",
+                        "content": "Jesteś ekspertem od konkretów zmysłowych. Jeden konkret zmysłowy > pięć abstrakcyjnych przymiotników.\n\nZmysły w kontekście produktów: wzrok, słuch, dotyk, przestrzeń (rozmiar, waga).\n\nAnalizuj tekst i zwróć:\n1. POTENCJAŁ ZMYSŁOWY - które elementy nadają się do opisu zmysłowego\n2. ABSTRAKCJE DO ZAMIANY - fragment abstrakcyjny + propozycja zmysłowa + który zmysł\n3. OSTRZEŻENIA - gdzie zmysły byłyby przesadzone (nie dodawać)\n4. TOP 3 WZMOCNIENIA ZMYSŁOWE\n\nFormat: Markdown z tabelami. Nie przesadzaj - punktowe wzmocnienia, nie rewolucja."
+                    },
+                    {
+                        "role": "user",
+                        "content": "{{1.text}}"
+                    }
+                ]
+            },
+            "metadata": {
+                "designer": {"x": 1200, "y": 0},
+                "restore": {
+                    "expect": {
+                        "model": {"label": "chatgpt-4o-latest"},
+                        "select": {"label": "Create a Chat Completion"}
+                    }
+                }
+            }
+        },
+        {
+            "id": 6,
+            "module": "openai-gpt-3:CreateCompletion",
+            "version": 1,
+            "parameters": {"__IMTCONN__": null},
+            "mapper": {
+                "model": "chatgpt-4o-latest",
+                "select": "chat",
+                "max_tokens": "2048",
+                "temperature": "0.8",
+                "n_completions": "1",
+                "response_format": "text",
+                "messages": [
+                    {
+                        "role": "system",
+                        "content": "Jesteś ekspertem od budowania TOŻSAMOŚCI i ASPIRACJI. Klient nie kupuje produktu - kupuje WERSJĘ SIEBIE.\n\nFrameworki: Jobs To Be Done, Tribal Identity, scenariusze aspiracyjne/realistyczne, micro-moments.\n\nAnalizuj tekst i zwróć:\n1. JOBS TO BE DONE - funkcjonalny, emocjonalny, społeczny, tożsamościowy\n2. TRIBAL IDENTITY - kim jest klient (tożsamościowo, nie demograficznie), język plemienia\n3. SCENARIUSZE - 2 aspiracyjne, 2 realistyczne, 2 hybrydy\n4. KONTRAST PRZED/PO - 3 przykłady\n5. MICRO-MOMENTS - 3 przykłady \"Ten moment, gdy...\"\n\nFormat: Markdown z tabelami."
+                    },
+                    {
+                        "role": "user",
+                        "content": "{{1.text}}"
+                    }
+                ]
+            },
+            "metadata": {
+                "designer": {"x": 1500, "y": 0},
+                "restore": {
+                    "expect": {
+                        "model": {"label": "chatgpt-4o-latest"},
+                        "select": {"label": "Create a Chat Completion"}
+                    }
+                }
+            }
+        },
+        {
+            "id": 7,
+            "module": "openai-gpt-3:CreateCompletion",
+            "version": 1,
+            "parameters": {"__IMTCONN__": null},
+            "mapper": {
+                "model": "chatgpt-4o-latest",
+                "select": "chat",
+                "max_tokens": "3000",
+                "temperature": "0.3",
+                "n_completions": "1",
+                "response_format": "text",
+                "messages": [
+                    {
+                        "role": "system",
+                        "content": "Jesteś Redaktorem prowadzącym. Dostajesz raporty od 5 agentów i tworzysz ustrukturyzowany brief JSON dla Rewritera.\n\nZbierz od KAŻDEGO agenta 2-4 najlepsze uwagi. Zwróć TYLKO poprawny JSON (bez markdown, bez ```json):\n\n{\n  \"tozsamosc\": {\n    \"klient\": \"kim jest klient tożsamościowo\",\n    \"transformacja\": \"PRZED → PO\"\n  },\n  \"przepisz\": [\n    {\"co\": \"cytat\", \"na\": \"propozycja\", \"priorytet\": \"wysoki/sredni\"}\n  ],\n  \"dodaj_scenariusze\": [\n    {\"typ\": \"aspiracyjny/realistyczny\", \"scenariusz\": \"treść\"}\n  ],\n  \"dodaj_zmysly\": [\n    {\"gdzie\": \"element\", \"propozycja\": \"opis zmysłowy\"}\n  ],\n  \"zamien_cechy_na_korzysci\": [\n    {\"cecha\": \"oryginał\", \"korzysc\": \"propozycja\"}\n  ],\n  \"usun\": [\n    {\"co\": \"fragment\", \"dlaczego\": \"powód\"}\n  ],\n  \"micro_moments\": [\"moment 1\", \"moment 2\"],\n  \"ton\": \"jaki ton docelowy\"\n}\n\nMax 7 przepisz, max 4 scenariusze, max 4 zmysły, max 5 korzyści, max 3 micro_moments.\nZwróć TYLKO JSON, bez żadnego tekstu przed ani po."
+                    },
+                    {
+                        "role": "user",
+                        "content": "TEKST ORYGINALNY:\n{{1.text}}\n\n---\n\nRAPORT AGENTA 1 (Ożywiacz języka):\n{{2.choices[].message.content}}\n\n---\n\nRAPORT AGENTA 2 (Tłumacz korzyści):\n{{3.choices[].message.content}}\n\n---\n\nRAPORT AGENTA 3 (Detektyw nudy):\n{{4.choices[].message.content}}\n\n---\n\nRAPORT AGENTA 4 (Malarz zmysłów):\n{{5.choices[].message.content}}\n\n---\n\nRAPORT AGENTA 5 (Architekt scenariuszy):\n{{6.choices[].message.content}}"
+                    }
+                ]
+            },
+            "metadata": {
+                "designer": {"x": 1800, "y": 0},
+                "restore": {
+                    "expect": {
+                        "model": {"label": "chatgpt-4o-latest"},
+                        "select": {"label": "Create a Chat Completion"}
+                    }
+                }
+            }
+        },
+        {
+            "id": 8,
+            "module": "openai-gpt-3:CreateCompletion",
+            "version": 1,
+            "parameters": {"__IMTCONN__": null},
+            "mapper": {
+                "model": "chatgpt-4o-latest",
+                "select": "chat",
+                "max_tokens": "4000",
+                "temperature": "0.8",
+                "n_completions": "1",
+                "response_format": "text",
+                "messages": [
+                    {
+                        "role": "system",
+                        "content": "Jesteś ekspertem od copywritingu produktowego. Dostajesz tekst oryginalny i brief JSON z instrukcjami.\n\nZASADY:\n1. Zachowaj wszystkie fakty - nie wymyślaj\n2. Zrealizuj WSZYSTKIE punkty z briefa\n3. Mów DO klienta (ty/twój), nie O produkcie\n4. Strona czynna, czasowniki akcji\n5. Zero korpomowy, zero pustych przymiotników\n6. Każde zdanie musi przejść test \"No i co z tego?\"\n\nSTRUKTURA:\n- Zacznij od scenariusza lub korzyści, NIE od \"Przedstawiamy...\"\n- Przeplataj cechy z korzyściami\n- Zakończ micro-momentem\n\nZwróć TYLKO przepisany tekst, gotowy do użycia. Bez komentarzy, bez wyjaśnień."
+                    },
+                    {
+                        "role": "user",
+                        "content": "TEKST ORYGINALNY:\n{{1.text}}\n\n---\n\nBRIEF:\n{{7.choices[].message.content}}"
+                    }
+                ]
+            },
+            "metadata": {
+                "designer": {"x": 2100, "y": 0},
+                "restore": {
+                    "expect": {
+                        "model": {"label": "chatgpt-4o-latest"},
+                        "select": {"label": "Create a Chat Completion"}
+                    }
+                }
+            }
+        },
+        {
+            "id": 9,
+            "module": "gateway:WebhookRespond",
+            "version": 1,
+            "parameters": {},
+            "mapper": {
+                "status": "200",
+                "body": "{{8.choices[].message.content}}",
+                "headers": []
+            },
+            "metadata": {
+                "designer": {"x": 2400, "y": 0}
+            }
+        }
+    ],
+    "metadata": {
+        "instant": true,
+        "version": 1,
+        "scenario": {
+            "roundtrips": 1,
+            "maxErrors": 3,
+            "autoCommit": true,
+            "autoCommitTriggerLast": true,
+            "sequential": false
+        },
+        "designer": {
+            "orphans": []
+        }
+    }
+}
