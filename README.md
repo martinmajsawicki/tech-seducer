@@ -6,7 +6,7 @@ Narzędzie do transformacji suchych tekstów technicznych (instrukcje, specyfika
 
 ## Jak działa
 
-Multi-agentowy workflow, gdzie 5 specjalistów AI analizuje tekst równolegle:
+Multi-agentowy workflow, gdzie 5 specjalistów AI analizuje tekst sekwencyjnie:
 
 | Agent | Perspektywa |
 |-------|-------------|
@@ -24,7 +24,17 @@ Następnie:
 
 - **Frontend:** Statyczna strona HTML (GitHub Pages)
 - **Backend:** Make.com workflow
-- **AI:** OpenAI GPT-4o
+- **AI:** OpenAI GPT-4o (`chatgpt-4o-latest`)
+
+## Status
+
+🟢 **GOTOWY** - workflow działa end-to-end
+
+```
+Webhook → 5 Agentów → Kompilator → Rewriter → Response
+```
+
+Czas przetwarzania: ~2 minuty
 
 ## Demo
 
@@ -45,7 +55,8 @@ tech-seducer/
 │   ├── 06_report_compiler.md
 │   └── 07_rewriter.md
 ├── make_workflow/          ← Instrukcja budowy workflow
-│   └── INSTRUKCJA_MAKE.md
+│   ├── INSTRUKCJA_MAKE.md
+│   └── TechSeducer_Sequential.json
 └── test_samples/           ← Przykładowe teksty do testów
 ```
 

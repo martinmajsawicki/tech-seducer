@@ -2,9 +2,9 @@
 
 > Workflow do transformacji tekstów technicznych w treści perswazyjne i uwodzicielskie
 
-**Status:** Prompty gotowe, workflow do zbudowania
+**Status:** GOTOWY - workflow działa end-to-end
 **Data utworzenia:** 2026-01-27
-**Ostatnia aktualizacja:** 2026-01-27
+**Ostatnia aktualizacja:** 2026-01-28
 
 ---
 
@@ -120,47 +120,47 @@ języka    korzyści  nudy      zmysłów   scenariuszy
 
 ## 5. Workflow Make.com
 
-### 5.1 Struktura
+### 5.1 Struktura (sekwencyjna)
+
+**Uwaga:** Workflow działa sekwencyjnie (nie równolegle) ze względu na ograniczenia Make.com w agregowaniu wyników z równoległych ścieżek.
 
 ```
 [WEBHOOK] Tekst wejściowy
      |
      v
-[ROUTER] ──────────────────────────────────────┐
-     |         |         |         |           |
-     v         v         v         v           v
-[HTTP/AI]  [HTTP/AI]  [HTTP/AI]  [HTTP/AI]  [HTTP/AI]
-Agent 1    Agent 2    Agent 3    Agent 4    Agent 5
-     |         |         |         |           |
-     └─────────┴─────────┴─────────┴───────────┘
-                         |
-                         v
-                   [AGGREGATOR]
-                         |
-                         v
-                    [HTTP/AI]
-                   Agent 6 (Kompilator)
-                         |
-                         v
-                    [HTTP/AI]
-                   Agent 7 (Rewriter)
-                         |
-                         v
-                   [RESPONSE/OUTPUT]
-                   Tekst przepisany
+[OpenAI] Agent 1: Ożywiacz języka
+     |
+     v
+[OpenAI] Agent 2: Tłumacz korzyści
+     |
+     v
+[OpenAI] Agent 3: Detektyw nudy
+     |
+     v
+[OpenAI] Agent 4: Malarz zmysłów
+     |
+     v
+[OpenAI] Agent 5: Architekt scenariuszy
+     |
+     v
+[OpenAI] Agent 6: Kompilator → JSON brief
+     |
+     v
+[OpenAI] Agent 7: Rewriter → tekst końcowy
+     |
+     v
+[WEBHOOK RESPONSE] Tekst przepisany
 ```
 
 ### 5.2 Moduły Make.com
 
 | Moduł | Typ | Opis |
 |-------|-----|------|
-| Trigger | Webhook / Google Form | Przyjmuje tekst wejściowy |
-| Router | Router | Rozdziela na 5 równoległych ścieżek |
-| Agent 1-5 | HTTP (OpenAI/Claude API) | Każdy z promptem z pliku |
-| Aggregator | Array Aggregator | Zbiera 5 odpowiedzi |
-| Agent 6 | HTTP (OpenAI/Claude API) | Kompilator → JSON |
-| Agent 7 | HTTP (OpenAI/Claude API) | Rewriter → tekst końcowy |
-| Output | Webhook Response / Notion / Email | Zwraca wynik |
+| Trigger | Custom Webhook | Przyjmuje JSON `{"text": "..."}` |
+| Agent 1-5 | OpenAI (Chat Completion) | Sekwencyjnie, każdy z pełnym promptem |
+| Agent 6 | OpenAI (Chat Completion) | Kompilator → JSON brief |
+| Agent 7 | OpenAI (Chat Completion) | Rewriter → tekst końcowy |
+| Output | Webhook Response | Zwraca plain text do frontendu |
 
 ### 5.3 Konfiguracja API
 
@@ -245,9 +245,9 @@ Tekst wyjściowy powinien:
 ## 10. Następne kroki
 
 1. [x] Napisać prompty dla wszystkich agentów
-2. [ ] Przygotować 2-3 przykładowe teksty do testów
-3. [ ] Zbudować workflow w Make.com
-4. [ ] Przetestować z różnymi kategoriami produktów
+2. [x] Przygotować 2-3 przykładowe teksty do testów
+3. [x] Zbudować workflow w Make.com
+4. [x] Przetestować z różnymi kategoriami produktów (winda, młynek do kawy, laptop)
 5. [ ] Przygotować prezentację na AI Day
 
 ---
@@ -262,7 +262,41 @@ Tekst wyjściowy powinien:
 
 ---
 
-## 12. Log zmian
+## 12. Stan implementacji (2026-01-28)
+
+### Status: GOTOWY
+
+Cały workflow działa end-to-end:
+- ✅ **Frontend** - GitHub Pages: https://martinmajsawicki.github.io/tech-seducer/
+- ✅ **Webhook** - przyjmuje JSON `{"text": "..."}`
+- ✅ **7 Agentów OpenAI** - sekwencyjnie, pełne prompty
+- ✅ **Kompilator** - generuje JSON brief
+- ✅ **Rewriter** - przepisuje tekst (tylko tekst, bez komentarzy)
+- ✅ **Webhook Response** - zwraca plain text do frontendu
+
+### Konfiguracja Make.com:
+- **Webhook URL:** `https://hook.eu2.make.com/4jhs5svi0q22xvtrl3rfo9gp9igwtnss`
+- **Model:** `chatgpt-4o-latest` (wszystkie moduły)
+- **Temperature:** 0.8 (agenci kreatywni), 0.3 (Kompilator)
+- **Architektura:** Sekwencyjna (nie równoległa)
+- **Czas przetwarzania:** ~2 minuty
+
+### Struktura plików:
+```
+tech-seducer/
+├── index.html              ← Frontend (GitHub Pages)
+├── README.md               ← Opis projektu
+├── PRD.md                  ← Ten dokument
+├── prompts/                ← Prompty (7 plików)
+├── make_workflow/
+│   ├── INSTRUKCJA_MAKE.md  ← Instrukcja budowy
+│   └── TechSeducer_Sequential.json ← Blueprint sekwencyjny
+└── test_samples/           ← Przykładowe teksty
+```
+
+---
+
+## 13. Log zmian
 
 | Data | Zmiana |
 |------|--------|
@@ -270,3 +304,10 @@ Tekst wyjściowy powinien:
 | 2026-01-27 | Dodanie 5. agenta (Architekt scenariuszy) |
 | 2026-01-27 | Napisanie wszystkich 7 promptów |
 | 2026-01-27 | Aktualizacja architektury i workflow |
+| 2026-01-27 | Frontend na GitHub Pages |
+| 2026-01-27 | Workflow Make.com: Webhook → Router → 5 Agentów → Aggregator → Kompilator (działa) |
+| 2026-01-28 | Przebudowa na architekturę sekwencyjną (ograniczenia Make.com z agregowaniem równoległych ścieżek) |
+| 2026-01-28 | Dodanie Rewritera i Webhook Response |
+| 2026-01-28 | Fix frontendu: response.text() zamiast response.json() |
+| 2026-01-28 | Fix Rewritera: zwraca tylko tekst (bez changelog/checklist) |
+| 2026-01-28 | **WORKFLOW GOTOWY** - przetestowany z windą, młynkiem do kawy, laptopem |
